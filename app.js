@@ -8,19 +8,23 @@ const port = process.env.PORT || 3000;
 
 // other imports
 const examplesRouter = require("./routers/examplesRouter");
-const { notFoundHandler } = require("./middlewares/notFoundHandler");
-const { errorsHandler } = require("./middlewares/errorsHandler");
+const notFoundHandler = require("./middlewares/notFoundHandler");
+const errorsHandler = require("./middlewares/errorsHandler");
+const corsPolicy = require("./middlewares/corsPolicy");
 
 // define static assets path
 // create pubic directory inside root directory mkdir public
 app.use(express.static("public"));
 
-// root route
+// CORS policy - cross-origin allowed
+app.use(corsPolicy);
+
+// root route - web route
 app.get("/", (req, res) => {
     res.send("HomePage");
 });
 
-// other routes
+// other routes - API routes
 app.use("/examples", examplesRouter);
 
 // fallbacks and errors handlers
