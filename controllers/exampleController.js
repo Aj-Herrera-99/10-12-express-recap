@@ -1,5 +1,6 @@
 // imports
 const { examples } = require("../models/examples"); //data
+const CustomError = require("../classes/CustomError")
 
 // controller - CRUD operations
 // read - index
@@ -11,7 +12,7 @@ const index = (req, res) => {
 const show = (req, res) => {
     const idTarget = req.params.id;
     const exampleTarget = examples.find((example) => example.id == idTarget);
-    if (!exampleTarget) return res.sendStatus(404);
+    if (!exampleTarget) throw new CustomError("Not Found", 404);
     res.json(exampleTarget);
 };
 
